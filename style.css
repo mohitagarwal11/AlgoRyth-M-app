@@ -94,7 +94,7 @@ button.coming-soon::after {
 }
 
 #sorting_btns,
-#inputs {
+#utility {
     display: none;
     justify-content: center;
     gap: 10px;
@@ -117,6 +117,6 @@ body.active .button_container {
 
 body.active .array_container,
 body.active #sorting_btns,
-body.active #inputs {
+body.active #utility{
     display: flex;
 }

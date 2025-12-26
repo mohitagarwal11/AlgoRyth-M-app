@@ -3,7 +3,8 @@ const arrCon = document.getElementById("array_container");
 
 const sortBtn = document.getElementById("sort");
 const resetBtn = document.getElementById("reset");
-const pause_btn = document.getElementById("pause");
+const pauseBtn = document.getElementById("pause");
+const parallelBtn = document.getElementById("parallel");
 
 const mergeBtn = document.getElementById("merge");
 const quickBtn = document.getElementById("quick");
@@ -74,12 +75,11 @@ function renderBars(arr) {
         bar.style.width = ((1050 / arrlen) - 2) + "px";
         bar.classList.add("bar");
         arrCon.appendChild(bar);
-
     });
 }
 
-async function runSort(sortFn, btn){
-    if(isSorting) return;
+async function runSort(sortFn, btn) {
+    if (isSorting) return;
 
     btn.style.borderColor = "#4d50ff"
     animations.steps = [];
@@ -130,26 +130,27 @@ async function playAnimations(speed, result) {
             await sleep(speed);
         }
     }
-    isSorting = false;
 
-    let i = 0;
-    for (let bar of bars) {
-        const barValue = parseInt(bar.style.height);
-        if (barValue == result[i++])
-            bar.style.backgroundColor = "green";
-        await sleep(15);
-    }
+    if (isSorting) {
+        let i = 0;
+        for (let bar of bars) {
+            const barValue = parseInt(bar.style.height);
+            if (barValue == result[i++])
+                bar.style.backgroundColor = "green";
+            await sleep(15);
+        }
+    }else return;
 }
 
 function stopAnimations() {
     isPaused = false;
-    pause_btn.textContent = "Pause"
+    pauseBtn.textContent = "Pause"
     isSorting = false;
     animations.steps = [];
 }
 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+function sleep() {
+    return new Promise(resolve => setTimeout(resolve, speed));
 }
 
 sortBtn.addEventListener("click", () => {
@@ -158,21 +159,26 @@ sortBtn.addEventListener("click", () => {
     renderBars(array);
 });
 
-resetBtn.addEventListener("click", () => {
-    resetArray();
-    renderBars(array);
-    stopAnimations();
+parallelBtn.addEventListener("click", () => {
+    //make six diff containers with maybe 10 20 bars and each show diff sorting types
 });
 
-pause_btn.addEventListener("click", () => {
+resetBtn.addEventListener("click", () => {
+    stopAnimations();
+    resetArray();
+    renderBars(array);
+    pauseBtn.style.borderColor = "#333333";
+});
+
+pauseBtn.addEventListener("click", () => {
     isPaused = !isPaused;
     //console.log(isPaused);
     if (isPaused) {
-        pause_btn.textContent = "Resume";
-        pause_btn.style.borderColor = "#4d50ff";
+        pauseBtn.textContent = "Resume";
+        pauseBtn.style.borderColor = "#4d50ff";
     } else {
-        pause_btn.textContent = "Pause";
-        pause_btn.style.borderColor = "#333333";
+        pauseBtn.textContent = "Pause";
+        pauseBtn.style.borderColor = "#333333";
     }
 });
 
@@ -183,7 +189,7 @@ selectionBtn.addEventListener("click", () => runSort(selectionSort, selectionBtn
 heapBtn.addEventListener("click", () => runSort(heapSort, heapBtn));
 
 speed_slider.addEventListener("input", () => {
-    speed = (101 - speed_slider.value);
+    speed = (251 - speed_slider.value);
     // console.log("Speed: " + speed + "ms");
 });
 

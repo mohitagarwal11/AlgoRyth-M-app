@@ -20,20 +20,21 @@
     <div class="array_container" id="array_container">
         <!-- bars get added here -->
     </div>
-
-    <div id="sorting_btns">
+    <div id="utility">
+        <button id="parallel">Parallel Mode</button>
         <button id="reset">Reset</button>
         <button id="pause">Pause</button>
+
+        <input type="range" id="speed_slider" min="1" max="250" value="50">
+        <input type="number" id="arrLen" min="10" max="475" value="100">
+
+    </div>
+    <div id="sorting_btns">
         <button id="merge">Merge Sort</button>
         <button id="quick">Quick Sort</button>
         <button id="heap">Heap Sort</button>
         <button id="bubble">Bubble Sort</button>
         <button id="selection">Selection Sort</button>
-    </div>
-    <div id = "inputs">
-        <input type="range" id="speed_slider" min="1" max="100" value="50">
-        <input type="number" id="arrLen" min="10" max="475" value="100">
-        
     </div>
 </body>
 
