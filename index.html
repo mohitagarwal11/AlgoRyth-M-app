@@ -1,41 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="style.css" rel="stylesheet" />
     <script src="sorting.js" defer></script>
+    <script src="searching.js" defer></script>
     <script src="script.js" defer></script>
     <title>AlgoRyth-M</title>
-</head>
+  </head>
 
-<body>
+  <body>
+    <button id="home_btn">← Home</button>
+
     <h1>AlgoRyth-M</h1>
     <div class="button_container">
-        <button id="sort">SORTING</button>
-        <button class="coming-soon" disabled>SEARCHING</button>
+      <button id="sort">SORTING</button>
+      <button id="search">SEARCHING</button>
     </div>
+
+    <div id="sort_status"></div>
+    <div id="search_status"></div>
 
     <div class="array_container" id="array_container">
-        <!-- bars get added here -->
+      <div id="target_indicator"></div>
+      <!-- bars get added here -->
     </div>
+
     <div id="utility">
-        <button id="parallel">Parallel Mode</button>
-        <button id="reset">Reset</button>
-        <button id="pause">Pause</button>
+      <button id="generate">Generate New</button>
+      <button id="pause">Pause</button>
 
-        <input type="range" id="speed_slider" min="1" max="250" value="50">
-        <input type="number" id="arrLen" min="10" max="475" value="100">
+      <label>Speed:</label>
+      <input type="range" id="speed_slider" min="1" max="250" value="50" />
 
+      <label>Size:</label>
+      <input type="number" id="arrLen" min="10" max="475" value="100" />
     </div>
+
     <div id="sorting_btns">
-        <button id="merge">Merge Sort</button>
-        <button id="quick">Quick Sort</button>
-        <button id="heap">Heap Sort</button>
-        <button id="bubble">Bubble Sort</button>
-        <button id="selection">Selection Sort</button>
+      <button id="merge">Merge Sort</button>
+      <button id="quick">Quick Sort</button>
+      <button id="heap">Heap Sort</button>
+      <button id="bubble">Bubble Sort</button>
+      <button id="selection">Selection Sort</button>
     </div>
-</body>
 
+    <div id="searching_btns">
+      <button id="linear">Linear Search</button>
+      <button id="binary">Binary Search</button>
+
+      <label>Target:</label>
+      <input type="number" id="target" value="0" />
+    </div>
+  </body>
 </html>
