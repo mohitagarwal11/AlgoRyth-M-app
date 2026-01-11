@@ -21,6 +21,7 @@ An interactive algorithm visualizer that brings sorting and searching algorithms
 
 - **Realtime Visualization** - Watch algorithms work step-by-step
 - **Adjustable Speed** - Control animation speed
+- **Customizable Array Input** - Set custom array input
 - **Customizable Array Size** - Set array length (10-475 elements)
 - **Pause/Resume** - Pause animations at any time
 - **Generate New Arrays** - Create random arrays on demand
@@ -59,7 +60,7 @@ start index.html
 
 1. **Select Mode**: Choose between SORTING or SEARCHING on the home screen
 2. **Adjust Settings**:
-   - Set your preferred array size (10-475)
+   - Set your custom array values and size
    - Adjust animation speed using the slider
 3. **Choose Algorithm**: Click on any algorithm button to start visualization
 4. **Control Playback**: Use Pause/Resume to control the animation
@@ -69,6 +70,7 @@ start index.html
 ### For Searching
 
 - Enter a target value in the "Target" input field
+- Target Value can be found by hovering over the bars on the screen. (For custom arrays use your own inputed values as target value)
 - The visualizer will show a green line indicating the target height
 - Watch as the algorithm searches for your value
 
@@ -76,21 +78,21 @@ start index.html
 
 ### Sorting
 
-- 🟣 **Pink (#ff4da6)** - Default/unsorted elements
-- ⚪ **White** - Elements being compared
-- 🟠 **Orange (#ffaa00)** - Elements being swapped
-- 🟢 **Green** - Sorted/completed elements
-- 🟡 **Yellow** - Pivot element (Quick Sort)
-- 🟠 **Orange (#ff6600)** - Partition marker (Quick Sort)
+- **Pink (#ff4da6)** - Default/unsorted elements
+- **White** - Elements being compared
+- **Orange (#ffaa00)** - Elements being swapped
+- **Green** - Sorted/completed elements
+- **Yellow** - Pivot element (Quick Sort)
+- **Orange (#ff6600)** - Partition marker (Quick Sort)
 
 ### Searching
 
-- 🟣 **Pink (#ff4da6)** - Active search range
-- 🔵 **Cyan (#00ffff)** - Current element being checked (Linear Search)
-- 🟡 **Yellow** - Middle element being checked (Binary Search)
-- ⚫ **Dark Gray** - Eliminated search space
-- 🟢 **Green** - Found target
-- 🔴 **Red** - Target not found
+- **Pink (#ff4da6)** - Active search range
+- **Cyan (#00ffff)** - Current element being checked (Linear Search)
+- **Yellow** - Middle element being checked (Binary Search)
+- **Dark Gray** - Eliminated search space
+- **Green** - Found target
+- **Red** - Target not found
 
 ## Technical Details
 
