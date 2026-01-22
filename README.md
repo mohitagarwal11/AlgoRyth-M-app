@@ -1,6 +1,8 @@
 # AlgoRyth-M
 
-An interactive algorithm visualizer that brings sorting and searching algorithms to life. This project emphasizes clarity, step by step execution making it suitable for both learning and demonstration purposes.
+An interactive algorithm visualizer that brings sorting and searching algorithms to life. This project emphasizes clarity and step-by-step execution, making it suitable for both learning and demonstration purposes.
+
+Live Demo: https://mohitagarwal11.github.io/AlgoRyth-M-app/
 
 ## Key Highlights
 
@@ -16,35 +18,6 @@ An interactive algorithm visualizer that brings sorting and searching algorithms
 - Clear separation of concerns between algorithm logic, animation rendering and UI control flow
 - Binary search visualization operates on a sorted copy for correctness
 
-## Getting Started
-
-### Installation
-
-1. Clone the repository
-
-```bash
-git clone https://github.com/yourusername/algorythm-m.git
-```
-
-2. Navigate to the project directory
-
-```bash
-cd algorythm-m
-```
-
-3. Open `index.html` in your browser
-
-```bash
-# On macOS
-open index.html
-
-# On Linux
-xdg-open index.html
-
-# On Windows
-start index.html
-```
-
 ## How to Use
 
 1. **Select Mode**: Choose between SORTING or SEARCHING on the home screen
@@ -59,13 +32,20 @@ start index.html
 ### For Searching
 
 - Enter a target value in the "Target" input field
-- Target Value can be found by hovering over the bars on the screen. (For custom arrays use your own inputed values as target value)
+- Target values can be identified by hovering over the bars. For custom arrays, use the original input values as the target.
 - The visualizer will show a green line indicating the target height
 - Watch as the algorithm searches for your value
 
+## Known Limitations and Issues
+
+- Array size is capped at 475 elements to prevent bars from becoming sub-pixel in width, which would break visual clarity and hover-based inspection.
+- Step-by-step reverse navigation is unreliable for Heap Sort due to recursive heapify operations not being fully reversible in the current animation model.
+- Binary Search visualization operates on a sorted copy of the array; the original visual order is not restored after the search.
+- Comparison counts are approximate and tied to animation steps rather than strict algorithmic comparison counts.
+
 ## Author
 
-Your Name - [@mohitagarwal11](https://github.com/mohitagarwal11)
+Mohit Agarwal - [@mohitagarwal11](https://github.com/mohitagarwal11)
 
 ## Acknowledgments
 

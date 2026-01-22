@@ -88,7 +88,6 @@ function partition(arr, low, high) {
   return i + 1;
 }
 
-//this is not working for some reason in prev and next
 //heap sort
 function heapSort(arr) {
   const n = arr.length;
