@@ -2,8 +2,7 @@
 
 An interactive algorithm visualizer that brings sorting and searching algorithms to life. This project emphasizes clarity and step-by-step execution, making it suitable for both learning and demonstration purposes.
 
-Live Demo: https://mohitagarwal11.github.io/AlgoRyth-M-app/
-
+Live Demo: mohitagarwal11.github.io/AlgoRythM/
 ## Key Highlights
 
 - Visualizes core algorithms: Merge, Quick, Heap, Bubble, Selection, Linear Search and Binary Search
@@ -39,9 +38,6 @@ Live Demo: https://mohitagarwal11.github.io/AlgoRyth-M-app/
 ## Known Limitations and Issues
 
 - Array size is capped at 475 elements to prevent bars from becoming sub-pixel in width, which would break visual clarity and hover-based inspection.
-- Step-by-step reverse navigation is unreliable for Heap Sort due to recursive heapify operations not being fully reversible in the current animation model.
-- Binary Search visualization operates on a sorted copy of the array; the original visual order is not restored after the search.
-- Comparison counts are approximate and tied to animation steps rather than strict algorithmic comparison counts.
 
 ## Author
 
