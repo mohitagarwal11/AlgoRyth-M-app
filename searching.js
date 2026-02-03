@@ -39,8 +39,8 @@ function binarySearch(arr, target) {
     animations.pivot(mid);
 
     if (sortedArr[mid] === target) {
-      animations.found(mid);
-      return { result: mid, found: true };
+    animations.found(mid);
+      return { result: mid, found: true, restore: true };
     }
 
     if (sortedArr[mid] < target) {
@@ -57,5 +57,5 @@ function binarySearch(arr, target) {
   }
 
   animations.notFound();
-  return { result: -1, found: false };
+  return { result: -1, found: false, restore: true };
 }

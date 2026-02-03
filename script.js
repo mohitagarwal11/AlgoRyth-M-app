@@ -88,6 +88,7 @@ let target = targetBox.value;
 let isPaused = false;
 let isSorting = false;
 let isUserArray = false;
+let pendingBinaryRestore = false;
 
 let currentStepIndex = -1;
 let isSteppingMode = false;
@@ -96,6 +97,34 @@ let steppingSpeed = 150;
 
 const targetMin = 10;
 const targetMax = 400;
+
+function updatePlaybackControls() {
+  const canPause = isSorting;
+  pauseBtn.disabled = !canPause;
+
+  if (!canPause) {
+    pauseBtn.textContent = "Pause";
+    pauseBtn.style.borderColor = "#333333";
+  } else if (isPaused) {
+    pauseBtn.textContent = "Resume";
+    pauseBtn.style.borderColor = "#4d50ff";
+  } else {
+    pauseBtn.textContent = "Pause";
+    pauseBtn.style.borderColor = "#333333";
+  }
+
+  const hasSteps =
+    isSteppingMode && animations.steps.length > 0 && steppingBars;
+  const canPrev = hasSteps && currentStepIndex > -1;
+  const canNext =
+    hasSteps && currentStepIndex < animations.steps.length - 1;
+
+  prevBtn.disabled = !canPrev;
+  nextBtn.disabled = !canNext;
+  const stepBorder = hasSteps ? "#00ff00" : "#333333";
+  prevBtn.style.borderColor = stepBorder;
+  nextBtn.style.borderColor = stepBorder;
+}
 
 const userInput = arrBox.value;
 
@@ -129,6 +158,7 @@ const getUserArray = () => {
   if (!allUnique(originalArray)) alert("Enter unique elements!");
   array = normalizeUserArray(array);
   renderBars(array);
+  pendingBinaryRestore = false;
 };
 
 function normalizeUserArray(arr) {
@@ -194,9 +224,13 @@ function renderBars(arr) {
 async function runSort(sortFn, btn) {
   if (isSorting) return;
 
+  restoreArrayAfterBinarySearch();
+  stopAnimations();
+
   btn.style.borderColor = "#4d50ff";
   animations.steps = [];
   isPaused = false;
+  updatePlaybackControls();
   sortStatus.textContent = `Sorting with ${btn.textContent}...`;
 
   const result = sortFn(array);
@@ -209,13 +243,22 @@ async function runSort(sortFn, btn) {
 async function runSearch(searchFn, btn, target) {
   if (isSorting) return;
 
+  restoreArrayAfterBinarySearch();
+  stopAnimations();
+  renderBars(array);
+
   btn.style.borderColor = "#4d50ff";
   animations.steps = [];
   isPaused = false;
+  updatePlaybackControls();
   searchStatus.textContent = `Searching for: ${target}`;
 
   const result = searchFn(array, target);
   await playAnimations(speed, result);
+
+  if (result && result.restore) {
+    pendingBinaryRestore = true;
+  }
 
   btn.style.borderColor = "#333333";
 
@@ -513,7 +556,9 @@ async function playAnimations(animSpeed, result) {
 
   isSorting = true;
   isPaused = false;
+  isSteppingMode = false;
   currentStepIndex = -1;
+  updatePlaybackControls();
 
   for (let i = 0; i < animations.steps.length; i++) {
     currentStepIndex = i;
@@ -530,21 +575,24 @@ async function playAnimations(animSpeed, result) {
   isSorting = false;
 
   isSteppingMode = true;
-  prevBtn.style.borderColor = "#00ff00";
-  nextBtn.style.borderColor = "#00ff00";
+  updatePlaybackControls();
 }
 
 function stopAnimations() {
   isPaused = false;
-  pauseBtn.textContent = "Pause";
   isSorting = false;
 
   isSteppingMode = false;
   currentStepIndex = -1;
   animations.steps = [];
 
-  prevBtn.style.borderColor = "#333333";
-  nextBtn.style.borderColor = "#333333";
+  updatePlaybackControls();
+}
+
+function restoreArrayAfterBinarySearch() {
+  if (!pendingBinaryRestore) return;
+  renderBars(array);
+  pendingBinaryRestore = false;
 }
 
 function sleep() {
@@ -552,7 +600,9 @@ function sleep() {
 }
 
 function showView(viewName) {
+  stopAnimations();
   document.body.className = viewName;
+  pendingBinaryRestore = false;
 
   if (viewName === "sorting-view") {
     generateArray();
@@ -572,7 +622,7 @@ function showHome() {
   stopAnimations();
   document.body.className = "";
   arrCon.innerHTML = "";
-  pauseBtn.style.borderColor = "#333333";
+  pendingBinaryRestore = false;
   searchStatus.textContent = "";
   sortStatus.textContent = "";
   targetIndicator.style.display = "none";
@@ -597,24 +647,18 @@ generateBtn.addEventListener("click", () => {
   originalArray = [];
   generateArray();
   renderBars(array);
+  pendingBinaryRestore = false;
   arrBox.value = null;
   targetBox.value = null;
-  pauseBtn.style.borderColor = "#333333";
   searchStatus.textContent = "";
   sortStatus.textContent = "";
   targetIndicator.style.display = "none";
 });
 
 pauseBtn.addEventListener("click", () => {
+  if (!isSorting) return;
   isPaused = !isPaused;
-  isSteppingMode = !isSteppingMode;
-  if (isPaused) {
-    pauseBtn.textContent = "Resume";
-    pauseBtn.style.borderColor = "#4d50ff";
-  } else {
-    pauseBtn.textContent = "Pause";
-    pauseBtn.style.borderColor = "#333333";
-  }
+  updatePlaybackControls();
 });
 
 prevBtn.addEventListener("click", async () => {
@@ -624,12 +668,12 @@ prevBtn.addEventListener("click", async () => {
   }
 
   isPaused = true;
-  pauseBtn.textContent = "Resume";
-  pauseBtn.style.borderColor = "#4d50ff";
+  updatePlaybackControls();
 
   const step = animations.steps[currentStepIndex];
   await animateStep(step, steppingBars, steppingSpeed, true);
   currentStepIndex--;
+  updatePlaybackControls();
 
   // console.log("Went to Prev step: ${currentStepIndex + 1}");
 });
@@ -645,12 +689,12 @@ nextBtn.addEventListener("click", async () => {
   }
 
   isPaused = true;
-  pauseBtn.textContent = "Resume";
-  pauseBtn.style.borderColor = "#4d50ff";
+  updatePlaybackControls();
 
   currentStepIndex++;
   const step = animations.steps[currentStepIndex];
   await animateStep(step, steppingBars, steppingSpeed, false);
+  updatePlaybackControls();
 
   // console.log("Went to next step: ${currentStepIndex + 1}");
 });
@@ -691,6 +735,7 @@ userArrLen.addEventListener("input", () => {
   isUserArray = false;
   generateArray();
   renderBars(array);
+  pendingBinaryRestore = false;
 });
 
 targetBox.addEventListener("input", () => {
@@ -713,3 +758,5 @@ document.getElementById("random").addEventListener("click", () => {
 window.addEventListener("resize", () => {
   if (!isSorting) renderBars(array);
 });
+
+updatePlaybackControls();
